@@ -1,4 +1,4 @@
-import Blockchain from "./blockchain.js"
+const Blockchain = require("./blockchain-common.cjs")
 
 const bitcoin = new Blockchain()
 

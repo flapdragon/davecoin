@@ -10,7 +10,9 @@ class Blockchain {
       index: this.chain.length + 1,
       timestamp: Date.now(),
       transactions: this.newTransactions,
-      ...arguments
+      nonce,
+      hash,
+      previousBlockHash
     }
 
     // Reset transactions
