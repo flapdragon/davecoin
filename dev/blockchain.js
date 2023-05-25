@@ -1,7 +1,7 @@
 class Blockchain {
   constructor() {
     this.chain = []
-    this.newTransactions = []
+    this.pendingTransactions = []
   }
 
   createNewBlock(nonce, previousBlockHash, hash) {
@@ -9,14 +9,14 @@ class Blockchain {
     const newBlock = {
       index: this.chain.length + 1,
       timestamp: Date.now(),
-      transactions: this.newTransactions,
+      transactions: this.pendingTransactions,
       nonce,
       hash,
       previousBlockHash
     }
 
     // Reset transactions
-    this.newTransactions = []
+    this.pendingTransactions = []
 
     // Add new block to blockchain
     this.chain.push(newBlock)
