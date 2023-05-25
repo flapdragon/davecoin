@@ -1,0 +1,12 @@
+{
+  "name": "davecoin",
+  "version": "1.0.0",
+  "description": "Creating my own Bitcoin style blockchain purely for learning purposes. I am providing this code freely but it is not intended to to be production ready so please use your at your own risk.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
