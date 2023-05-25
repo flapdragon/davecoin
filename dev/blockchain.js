@@ -27,6 +27,20 @@ class Blockchain {
   getLastBlock() {
     return this.chain[this.chain.length - 1]
   }
+
+  createNewTransaction(amount, sender, recipient) {
+    // Create new transaction
+    const newTransaction = {
+      amount,
+      sender,
+      recipient
+    }
+  
+    // Add to transactions
+    this.pendingTransactions.push(newTransaction)
+  
+    return this.getLastBlock()["index"] + 1
+  }
 }
 
 export default Blockchain
