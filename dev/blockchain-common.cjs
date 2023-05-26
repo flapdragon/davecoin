@@ -13,8 +13,8 @@ Blockchain.prototype.createNewBlock = function(nonce, previousBlockHash, hash) {
     timestamp: Date.now(),
     transactions: this.pendingTransactions,
     nonce: nonce,
-    hash: hash,
-    previousBlockHash: previousBlockHash
+    previousBlockHash: previousBlockHash,
+    hash: hash
   }
 
   // Reset transactions

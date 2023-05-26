@@ -1,4 +1,4 @@
-const sha256 = import("sha256")
+import sha256 from "sha256"
 
 class Blockchain {
   constructor() {
@@ -14,8 +14,8 @@ class Blockchain {
       timestamp: Date.now(),
       transactions: this.pendingTransactions,
       nonce,
-      hash,
-      previousBlockHash
+      previousBlockHash,
+      hash
     }
 
     // Reset transactions
