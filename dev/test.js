@@ -15,27 +15,81 @@ bitcoin.createNewTransaction(0.36837716, "bc1qewf0u2ztugn6sdmlt7zc7g8nytljli4jc6
 bitcoin.createNewTransaction(6.77803854, "bc109194zb8ekqk4uutwc5fsz4ok5zajjdy2pf62lp", "bc1vzggu5v4r0unlke7nqf36pmhdkkvwx3uf7yp21d")
 bitcoin.createNewBlock(2057796636, "aa6890829510931f9593852ec1d97209340be9883c8b675accdd54b582e32219", "2db317222c996b6380f1b4f1102253cbec31685ef0ff4a71f665136bfa717cad")
 
-// Test block hash
-const previousBlockHash = bitcoin.chain[bitcoin.chain.length - 1].hash
-const currentBlockData = [
-  {
-    amount: 7.01194739,
-    sender: "bc1vzggu5v4r0unlke7nqf36pmhdkkvwx3uf7yp21d",
-    recipient: "bc1m36j3zwwt6j2m9lzm4c1c0khla9gkt32mcpzmvy"
-  },
-  {
-    amount: 57.97787373,
-    sender: "bc109194zb8ekqk4uutwc5fsz4ok5zajjdy2pf62lp",
-    recipient: "bc1vmvdh8w97kcerwsj0cqpz3zi8n90g7o6hvcf93l"
-  },
-  {
-    amount: 0.05824079,
-    sender: "bc1vmvdh8w97kcerwsj0cqpz3zi8n90g7o6hvcf93l",
-    recipient: "bc1qewf0u2ztugn6sdmlt7zc7g8nytljli4jc66zd2"
-  }
-]
-const nonce = 865897280
-console.log(bitcoin.hashBlock(previousBlockHash, currentBlockData, nonce))
+// Test block hash 1
+{
+  const previousBlockHash = bitcoin.chain[bitcoin.chain.length - 1].hash
+  const currentBlockData = [
+    {
+      amount: 7.01194739,
+      sender: "bc1vzggu5v4r0unlke7nqf36pmhdkkvwx3uf7yp21d",
+      recipient: "bc1m36j3zwwt6j2m9lzm4c1c0khla9gkt32mcpzmvy"
+    },
+    {
+      amount: 57.97787373,
+      sender: "bc109194zb8ekqk4uutwc5fsz4ok5zajjdy2pf62lp",
+      recipient: "bc1vmvdh8w97kcerwsj0cqpz3zi8n90g7o6hvcf93l"
+    },
+    {
+      amount: 0.05824079,
+      sender: "bc1vmvdh8w97kcerwsj0cqpz3zi8n90g7o6hvcf93l",
+      recipient: "bc1qewf0u2ztugn6sdmlt7zc7g8nytljli4jc66zd2"
+    }
+  ]
+  const nonce = 865897280
+  console.log(bitcoin.hashBlock(previousBlockHash, currentBlockData, nonce))
+}
+
+// Test proof of work 1
+{
+  const previousBlockHash = bitcoin.chain[bitcoin.chain.length - 1].hash
+  const currentBlockData = [
+    {
+      amount: 7.01194739,
+      sender: "bc1vzggu5v4r0unlke7nqf36pmhdkkvwx3uf7yp21d",
+      recipient: "bc1m36j3zwwt6j2m9lzm4c1c0khla9gkt32mcpzmvy"
+    },
+    {
+      amount: 57.97787373,
+      sender: "bc109194zb8ekqk4uutwc5fsz4ok5zajjdy2pf62lp",
+      recipient: "bc1vmvdh8w97kcerwsj0cqpz3zi8n90g7o6hvcf93l"
+    },
+    {
+      amount: 0.05824079,
+      sender: "bc1vmvdh8w97kcerwsj0cqpz3zi8n90g7o6hvcf93l",
+      recipient: "bc1qewf0u2ztugn6sdmlt7zc7g8nytljli4jc66zd2"
+    }
+  ]
+  // Get nonce through proof of work
+  const nonce = bitcoin.proofOfWork(previousBlockHash, currentBlockData)
+  // Hash new block with correct nonce
+  bitcoin.hashBlock(previousBlockHash, currentBlockData, nonce)
+}
+
+// Test proof of work 2
+{
+  const previousBlockHash = "OINAISDFN09N09ASDNF90N90ASNDF"
+  const currentBlockData = [
+    {
+      amount: 101,
+      sender: "N90ANS90N90ANSDFN",
+      recipient: "90NA90SNDF90ANSDF09N"
+    },
+    {
+      amount: 30,
+      sender: "09ANS09DFNA8SDNF",
+      recipient: "UIANSIUDFUIABSDUIFB"
+    },
+    {
+      amount: 200,
+      sender: "89ANS89DFN98ASNDF89",
+      recipient: "AUSDF89ANSD9FNASD"
+    }
+  ]
+  // Get nonce through proof of work
+  const nonce = bitcoin.proofOfWork(previousBlockHash, currentBlockData)
+  // Hash new block with correct nonce
+  bitcoin.hashBlock(previousBlockHash, currentBlockData, nonce)
+}
 
 console.log(bitcoin)
 
