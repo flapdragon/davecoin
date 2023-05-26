@@ -1,4 +1,4 @@
-const sha256 = require("sha256")
+const sha256 = require("sha256") // Deprecated
 
 function Blockchain() {
   this.chain = []
@@ -47,9 +47,27 @@ Blockchain.prototype.createNewTransaction = function(amount, sender, recipient) 
 
 // Creates a sha256 hash for the block using the previous block's hash, current block's data and the nonce
 Blockchain.prototype.hashBlock = function(previousBlockHash, currentBlockData, nonce) {
+  // Gather and convert all black data to a string
   const dataAsString = previousBlockHash + nonce.toString() + JSON.stringify(currentBlockData)
+  // Hash the string using sha256
   const hash = sha256(dataAsString)
   return hash
+}
+
+// Loops over nonces incrementally until a hash is generated that begins with 4 0s, using previous block hash,
+// current block data and the correct nonce.
+// My computer will probably crash.
+Blockchain.prototype.proofOfWork = function(previousBlockHash, currentBlockData) {
+  // Initialize nonce
+  let nonce = 0
+  // Create block hash
+  let hash = this.hashBlock(previousBlockHash, currentBlockData, nonce)
+  while (hash.substring(0, 4) !== '0000') {
+    nonce++
+    let hash = this.hashBlock(previousBlockHash, currentBlockData, nonce)
+  }
+
+  return nonce
 }
 
 module.exports = Blockchain
