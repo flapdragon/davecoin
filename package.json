@@ -11,6 +11,7 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "express": "^4.18.2",
     "sha256": "^0.2.0"
   }
 }
