@@ -1,0 +1,4 @@
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{ "amount": 0.39212860, "sender": "bc1qewf0u2ztugn6sdmlt7zc7g8nytljli4jc66zd2", "recipient": "1dLHFRY0QJoWYdgd3Ei6y9yRlEOJv5JvQl" }' \
+  http://localhost:3000/transaction
