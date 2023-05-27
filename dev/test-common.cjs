@@ -1,9 +1,9 @@
 const Blockchain = require("./blockchain-common.cjs")
 
-const bitcoin = new Blockchain()
+const davecoin = new Blockchain()
 
 // Test genesis block
-console.log(bitcoin)
+console.log(davecoin)
 
 // NOTES: Bitcoin address formats
 // P2PKH/Legacy
