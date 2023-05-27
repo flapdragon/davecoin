@@ -4,7 +4,9 @@
   "description": "Creating my own Bitcoin style blockchain purely for learning purposes. I am providing this code freely but it is not intended to to be production ready so please use your at your own risk.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --watch dev -e js dev/api.js",
+    "common": "nodemon --watch dev -e js dev/api-common.cjs"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +14,7 @@
   "type": "module",
   "dependencies": {
     "express": "^4.18.2",
+    "nodemon": "^2.0.22",
     "sha256": "^0.2.0"
   }
 }
