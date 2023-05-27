@@ -3,6 +3,9 @@ const sha256 = require("sha256") // Deprecated
 function Blockchain() {
   this.chain = []
   this.pendingTransactions = []
+
+  // Create genesis block
+  this.createNewBlock(100, "0", "0")
 }
 
 // Creates a new block, adds all pending transactions to the block, adds block to the blockchain
