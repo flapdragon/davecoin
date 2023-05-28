@@ -9,7 +9,7 @@ const nodeAddress = uuidv1().split("-").join("")
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-const port = 3000
+const port = process.argv[2]
 
 // Initialize blockchain
 const davecoin = new Blockchain()
@@ -55,5 +55,5 @@ app.get("/mine", function (req, res) {
 
 // Start server
 app.listen(port, function() {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Listening on port ${port}...`)
 })
