@@ -1,6 +1,7 @@
 const express = require("express")
 const Blockchain = require("./blockchain-common.cjs")
 const { v1: uuidv1 } = require("uuid");
+const rp = require("request-promise")
 
 // Initialize node
 const nodeAddress = uuidv1().split("-").join("")
@@ -55,7 +56,32 @@ app.get("/mine", function (req, res) {
 
 // Register and broadcast node to the network
 app.post("/register-and-broadcast-node", function(req, res) {
+  // Get node from request
   const newNodeUrl = req.body.newNodeUrl
+  // TODO: There should be one method inside the blockchain class or somewhere to handle this rather than
+  // random pushes like this.
+  // Add to network nodes array
+  if (davecoin.networkNodes.indexOf == -1) {
+    davecoin.networkNodes.push(newNodeUrl)
+  }
+  // Broadcast to all existing nodes
+  const regNodesPromises = []
+  davecoin.networkNodes.forEach(networkNodeUrl => {
+    // TODO: Wouldn't it be better to hit a local function rather than hitting our own API over the network?
+    // Like a lot better?
+    const requestOptions = {
+      uri: networkNodeUrl + "/register-node",
+      method: "POST",
+      body: { newNodeUrl: newNodeUrl },
+      json: true
+    }
+    regNodesPromises.push(rp(requestOptions))
+  })
+
+  Promise.all(regNodesPromises)
+    .then(data => {
+
+    })
 })
 
 // Register node with the network
