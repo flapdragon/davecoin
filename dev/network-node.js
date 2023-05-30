@@ -95,7 +95,16 @@ app.post("/register-and-broadcast-node", (req, res) => {
 
 // Register node with the network
 app.post("/register-node", (req, res) => {
-  
+  // TODO: Refactor if statements to set appropriate response for each case.
+  //   Right now it replies with the same message no matter what
+  // Get new node url from request
+  const newNodeUrl = req.body.newNodeUrl
+  // If node is not already in array and if it's not the same as the current node (not itself)
+  if (davecoin.networkNodes.indexOf(newNodeUrl) == -1 && davecoin.currentNodeUrl !== newNodeUrl) {
+    // Add node to network nodes array
+    davecoin.networkNodes.push(newNodeUrl)
+  }
+  res.json({ "note": "New node registered successfully."})
 })
 
 // Register multiple nodes
