@@ -1,3 +1,4 @@
+TRANSACTIONS
 curl --header "Content-Type: application/json" \
   --request POST \
   --data '{ "amount": 0.39212860, "sender": "bc1qewf0u2ztugn6sdmlt7zc7g8nytljli4jc66zd2", "recipient": "1dLHFRY0QJoWYdgd3Ei6y9yRlEOJv5JvQl" }' \
@@ -27,3 +28,21 @@ curl --header "Content-Type: application/json" \
   --request POST \
   --data '{ "amount": 6.80827450, "sender": "bc1vhs19zygeyrr2sgsu974wal5eap1ay4k3wi80nz", "recipient": "bc12q9apkznjxyrub5h9rombc9fvftfg8zxla5b28p" }' \
   http://localhost:3000/transaction
+
+
+
+REGISTER NODES
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{ "newNodeUrl": "http://localhost:3002" }' \
+  http://localhost:3001/register-node
+
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{ "newNodeUrl": "http://localhost:3003" }' \
+  http://localhost:3001/register-node
+
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{ "newNodeUrl": "http://localhost:3003" }' \
+  http://localhost:3002/register-node
