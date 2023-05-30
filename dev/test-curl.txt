@@ -46,3 +46,17 @@ curl --header "Content-Type: application/json" \
   --request POST \
   --data '{ "newNodeUrl": "http://localhost:3003" }' \
   http://localhost:3002/register-node
+
+
+
+REGISTER NODES BULK
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{ "allNetworkNodes": [ "http://localhost:3002", "http://localhost:3003", "http://localhost:3004" ] }' \
+  http://localhost:3001/register-nodes-bulk
+
+Includes itself
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{ "allNetworkNodes": [ "http://localhost:3001", "http://localhost:3002", "http://localhost:3003", "http://localhost:3004" ] }' \
+  http://localhost:3002/register-nodes-bulk
