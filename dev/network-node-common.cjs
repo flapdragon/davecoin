@@ -67,8 +67,7 @@ app.post("/register-and-broadcast-node", function(req, res) {
   // Broadcast to all existing nodes
   const regNodesPromises = []
   davecoin.networkNodes.forEach(networkNodeUrl => {
-    // TODO: Wouldn't it be better to hit a local function rather than hitting our own API over the network?
-    // Like a lot better?
+    // TODO: Refactor this to hit a local function rather than hitting the API over the network
     const requestOptions = {
       uri: networkNodeUrl + "/register-node",
       method: "POST",
@@ -80,8 +79,18 @@ app.post("/register-and-broadcast-node", function(req, res) {
 
   Promise.all(regNodesPromises)
     .then(data => {
-
+      // TODO: Refactor this to hit a local function rather than hitting the API over the network
+      const bulkRegisterOptions = {
+        uri: newNodeUrl + '/register-nodes-bulk',
+        method: "POST",
+        body: { allNetworkNodes: [ ...davecoin.networkNodes, davecoin.currentNodeUrl ] },
+        json: true
+      }
+      return rp(bulkRegisterOptions)
     })
+      .then(data => {
+        res.json({ "note": "New node registered with network succesfully." })
+      })
 })
 
 // Register node with the network
