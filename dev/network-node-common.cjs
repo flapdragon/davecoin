@@ -117,8 +117,8 @@ app.post("/register-nodes-bulk", function(req, res) {
       // Add node to network nodes array
       davecoin.networkNodes.push(networkNodeUrl)
     }
-    res.json({ "note": "Bulk registration successful."})
   })
+  res.json({ "note": "Bulk registration successful."})
 })
 
 // Start server
