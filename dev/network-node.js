@@ -108,8 +108,17 @@ app.post("/register-node", (req, res) => {
 })
 
 // Register multiple nodes
+// TODO: How do Bitcoin type network nodes actually communicate and register with each other?
 app.post("/register-nodes-bulk", (req, res) => {
-
+  const allNetworkNodes = req.body.allNetworkNodes
+  allNetworkNodes.forEach(networkNodeUrl => {
+    // If node is not already in array and if it's not the same as the current node (not itself)
+    if (davecoin.networkNodes.indexOf(networkNodeUrl) == -1 && davecoin.currentNodeUrl !== networkNodeUrl) {
+      // Add node to network nodes array
+      davecoin.networkNodes.push(networkNodeUrl)
+    }
+    res.json({ "note": "Bulk registration successful."})
+  })
 })
 
 // Start server
