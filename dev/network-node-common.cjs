@@ -61,7 +61,7 @@ app.post("/register-and-broadcast-node", function(req, res) {
   // TODO: There should be one method inside the blockchain class or somewhere to handle this rather than
   // random pushes like this.
   // Add to network nodes array
-  if (davecoin.networkNodes.indexOf == -1) {
+  if (davecoin.networkNodes.indexOf(newNodeUrl) == -1) {
     davecoin.networkNodes.push(newNodeUrl)
   }
   // Broadcast to all existing nodes
