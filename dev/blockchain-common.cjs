@@ -1,4 +1,5 @@
 const sha256 = require("sha256") // Deprecated
+const { v1: uuidv1 } = require("uuid")
 
 // Get node URL from command process args
 const currentNodeUrl = process.argv[3]
@@ -45,12 +46,17 @@ Blockchain.prototype.createNewTransaction = function(amount, sender, recipient) 
   const newTransaction = {
     amount,
     sender,
-    recipient
+    recipient,
+    transactionId: uuidv1().split("-").join("")
   }
 
-  // Add to transactions
-  this.pendingTransactions.push(newTransaction)
+  return newTransaction
+}
 
+// Adds transaction to pending transactions array
+Blockchain.prototype.addTransactionToPendingTransactions = function(transaction) {
+  // Add to transactions
+  this.pendingTransactions.push(transaction)
   return this.getLastBlock()["index"] + 1
 }
 
