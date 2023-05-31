@@ -1,4 +1,5 @@
 import sha256 from "sha256" // Deprecated
+import { v1 as uuidv1 } from "uuid";
 
 // Get node URL from command process args
 const currentNodeUrl = process.argv[3]
@@ -46,12 +47,17 @@ class Blockchain {
     const newTransaction = {
       amount,
       sender,
-      recipient
+      recipient,
+      transactionId: uuidv1().split("-").join("")
     }
-  
+
+    return newTransaction
+  }
+
+  // Adds transaction to pending transactions array
+  addTransactionToPendingTransactions(transaction) {
     // Add to transactions
-    this.pendingTransactions.push(newTransaction)
-  
+    this.pendingTransactions.push(transaction)
     return this.getLastBlock()["index"] + 1
   }
 

@@ -1,6 +1,6 @@
 const express = require("express")
 const Blockchain = require("./blockchain-common.cjs")
-const { v1: uuidv1 } = require("uuid");
+const { v1: uuidv1 } = require("uuid")
 const rp = require("request-promise")
 
 // Initialize node

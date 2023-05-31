@@ -1,6 +1,6 @@
 import express from "express"
 import Blockchain from "./blockchain.js"
-import { v1 as uuidv1 } from "uuid";
+import { v1 as uuidv1 } from "uuid"
 import rp from "request-promise"
 
 // Initialize node
