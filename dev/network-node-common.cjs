@@ -22,7 +22,10 @@ app.get("/blockchain", function (req, res) {
 
 // Transaction
 app.post("/transaction", function (req, res) {
-  const blockIndex = davecoin.createNewTransaction(req.body.amount, req.body.sender, req.body.recipient)
+  // Get transaction from request
+  const newTransaction = req.body
+  // Add transaction to pending transactions array and get block index of block it will be added to
+  const blockIndex = davecoin.addTransactionToPendingTransactions(newTransaction)
   res.json({ "note": `Transaction will be added in block ${blockIndex}`})
 })
 
