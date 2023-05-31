@@ -26,6 +26,31 @@ app.post("/transaction", (req, res) => {
   res.json({ "note": `Transaction will be added in block ${blockIndex}`})
 })
 
+// Broadcast transaction
+app.post("/transaction/broadcast", (req, res) => {
+  // Get transaction from request
+  const newTransaction = davecoin.createNewTransaction(req.body.amount, req.body.sender, req.body.recipient)
+  // Add to pending transactions
+  davecoin.addTransactionToPendingTransactions(newTransaction)
+  // Broadcast new transaction
+  const requestPromises = []
+  davecoin.networkNodes.forEach(networkNodeUrl => {
+    const requestOptions = {
+      uri: networkNodeUrl + "/transaction",
+      method: "POST",
+      body: newTransaction,
+      json: true
+    }
+
+    requestPromises.push(rp(requestOptions))
+  })
+
+  Promise.all(requestPromises)
+    .then(data => {
+      res.json({ "note": "Transaction created and broadcast successfully." })
+    })
+})
+
 // Mine
 app.get("/mine", (req, res) => {
   // Get previous block
