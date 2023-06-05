@@ -86,6 +86,43 @@ class Blockchain {
     // Return the nonce that helps generate the correct hash that starts with 4 zeros
     return nonce
   }
+
+  // Validate chain
+  chainIsValid(blockchain) {
+    let validChain = true
+    // Start at index 1
+    for (let i = 1, chainLength = blockchain.length; i < chainLength; i++) {
+      const currentBlock = blockchain[i]
+      const currentBlockData = {
+        index: currentBlock.index,
+        timestamp: currentBlock.timestamp,
+        transactions: currentBlock.pendingTransactions,
+        previousBlockHash: currentBlock.previousBlockHash
+      }
+      const previousBlock = blockchain[i - 1]
+      const blockHash = this.hashBlock(previousBlock.hash, currentBlockData, currentBlock.nonce)
+      // If current block's hash does not start with 0000
+      if (blockHash.substring(0, 4) !== "0000") {
+        // Set valid chain to false
+        validChain = false
+      }
+      // If current block's previous hash property does not equal the previous block's hash
+      if (currentBlock.previousBlockHash !== previousBlock.hash) {
+        // Set valid chain to false
+        validChain = false
+      }
+    }
+
+    // Check genesis block
+    const genesisBlock = blockchain[0]
+    // If data does not match the data on the Blockchain constructor above
+    if (genesisBlock.nonce !== 100 || genesisBlock.previousBlockHash !== "0" || genesisBlock.hash !== "0" || genesisBlock.transactions.length !== 0) {
+      // Set valid chain to false
+      validChain = false
+    }
+
+    return validChain
+  }
 }
 
 export default Blockchain
