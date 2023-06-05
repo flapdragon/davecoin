@@ -70,16 +70,40 @@ app.get("/mine", function (req, res) {
   const nonce = davecoin.proofOfWork(previousBlockHash, currentBlockData)
   // Hash current block
   const blockHash = davecoin.hashBlock(previousBlockHash, currentBlockData, nonce)
-
-  // Send reward to block miner
-  davecoin.createNewTransaction(6.45601608, "000000000000000000000000000000000000000000", nodeAddress)
-
   // Create new block
   const newBlock = davecoin.createNewBlock(nonce, previousBlockHash, blockHash)
-  res.json({
-    "note": "New block mined successfully.",
-    "block": newBlock
+
+  // Broadcast new block to all nodes
+  const requestPromises = []
+  davecoin.networkNodes.forEach(networkNodeUrl => {
+    const requestOptions = {
+      uri: networkNodeUrl + "/receive-new-block",
+      method: "POST",
+      body: { newBlock: newBlock },
+      json: true
+    }
+
+    requestPromises.push(rp(requestOptions))
   })
+
+  Promise.all(requestPromises)
+    .then(data => {
+      // Send reward to block miner
+      const requestOptions = {
+        uri: davecoin.currentNodeUrl + "/transaction/broadcast",
+        method: "POST",
+        body: { amount: 6.45601608, sender: "000000000000000000000000000000000000000000", recipient: nodeAddress },
+        json: true
+      }
+
+      return rp(requestOptions)
+    })
+    .then( data => {
+      res.json({
+        "note": "New block mined and broadcast successfully.",
+        "block": newBlock
+      })
+    })
 })
 
 // Register and broadcast node to the network
