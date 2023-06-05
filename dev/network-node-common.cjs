@@ -106,6 +106,33 @@ app.get("/mine", function (req, res) {
     })
 })
 
+// Receive new block
+app.post("/receive-new-block", function(req, res) {
+    // Get block from request
+    const newBlock = req.body.newBlock
+    // Get previous block
+    const lastBlock = davecoin.getLastBlock()
+    // If new block has the correct previous hash and correct index
+    // TODO: seems like there are some other things we can check for
+    if (lastBlock.hash === newBlock.previousBlockHash && lastBlock["index"] + 1 === newBlock["index"]) {
+      // Add new block to chain
+      davecoin.chain.push(newBlock)
+      // Reset pending transactions
+      davecoin.pendingTransactions = []
+      res.json({
+        "note": "New block received and accepted.",
+        "newBlock": newBlock
+      })
+    }
+    // If not then send reject response
+    else {
+      res.json({
+        "note": "New block rejected",
+        "newBlock": newBlock
+      })
+    }
+})
+
 // Register and broadcast node to the network
 app.post("/register-and-broadcast-node", function(req, res) {
   // Get node from request
