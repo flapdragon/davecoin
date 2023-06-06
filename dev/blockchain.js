@@ -1,6 +1,15 @@
 import sha256 from "sha256" // Deprecated
 import { v1 as uuidv1 } from "uuid";
 
+// TODO: The network-node /mine endpoint and the chainIsValid method both create blocks but use their own code
+//   They need to use a shared block creation method that lives in Blockchain class
+// TODO: The block that is created for hashing is not the same as the one that gets added to the chain, see
+//   createNewBlock. Obviously. But there is overlap in functionality like index, timestamp, transactions
+//   that needs to be separated.
+// TODO: Local servers should not hit their own APIs. Functionality in those APIs need to be in
+//   their own local functions that are shared by the API and the local functionality. There should be a
+//   clear distinction between local and network calls.
+
 // Get node URL from command process args
 const currentNodeUrl = process.argv[3]
 
