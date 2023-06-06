@@ -62,7 +62,9 @@ app.get("/mine", function (req, res) {
   // Set current block data
   const currentBlockData = {
     index: previousBlock.index + 1,
-    transactions: davecoin.pendingTransactions
+    timestamp: Date.now(),
+    transactions: davecoin.pendingTransactions,
+    previousBlockHash: previousBlockHash
   }
   // Calculate nonce
   const nonce = davecoin.proofOfWork(previousBlockHash, currentBlockData)
