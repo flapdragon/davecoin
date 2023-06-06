@@ -62,7 +62,6 @@ app.get("/mine", function (req, res) {
   // Set current block data
   const currentBlockData = {
     index: previousBlock.index + 1,
-    timestamp: Date.now(),
     transactions: davecoin.pendingTransactions,
     previousBlockHash: previousBlockHash
   }
