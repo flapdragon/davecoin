@@ -108,7 +108,6 @@ Blockchain.prototype.chainIsValid = function(blockchain) {
       // Validate current block's hash.
       // If current block's hash does not start with 0000
       if (blockHash.substring(0, 4) !== "0000") {
-        console.log("ERROR blockHash:", blockHash)
         // Set valid chain to false
         validChain = false
       }
@@ -116,7 +115,6 @@ Blockchain.prototype.chainIsValid = function(blockchain) {
       // Validate that current block has the correct previous block hash.
       // If current block's previous hash property does not equal the previous block's hash
       if (currentBlock.previousBlockHash !== previousBlock.hash) {
-        console.log("ERROR previcurrentBlock.previousBlockHashousBlockHash:", currentBlock.previousBlockHash, "previousBlock.hash:", previousBlock.hash)
         // Set valid chain to false
         validChain = false
       }
@@ -127,7 +125,6 @@ Blockchain.prototype.chainIsValid = function(blockchain) {
     // Validate genesis block
     // If data does not match the data on the Blockchain constructor above
     if (genesisBlock.nonce !== 100 || genesisBlock.previousBlockHash !== "0" || genesisBlock.hash !== "0" || genesisBlock.transactions.length !== 0) {
-      console.log("ERROR genesisBlock:", genesisBlock)
       // Set valid chain to false
       validChain = false
     }
