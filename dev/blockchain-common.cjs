@@ -96,7 +96,6 @@ Blockchain.prototype.chainIsValid = function(blockchain) {
       // Format block data the way it was when it was hashed and created
       const currentBlockData = {
         index: currentBlock.index,
-        timestamp: currentBlock.timestamp,
         transactions: currentBlock.transactions,
         previousBlockHash: currentBlock.previousBlockHash
       }
