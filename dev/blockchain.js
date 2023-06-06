@@ -65,6 +65,7 @@ class Blockchain {
   hashBlock(previousBlockHash, currentBlockData, nonce) {
     // Gather and convert all black data to a string
     const dataAsString = previousBlockHash + nonce.toString() + JSON.stringify(currentBlockData)
+    // console.log(dataAsString)
     // Hash the string using sha256
     const hash = sha256(dataAsString)
     return hash
@@ -89,34 +90,47 @@ class Blockchain {
 
   // Validate chain
   chainIsValid(blockchain) {
+    // Initialize valid chain boolean
     let validChain = true
-    // Start at index 1
+    // Loop over chain, start at index 1 (skipping the genesis block)
     for (let i = 1, chainLength = blockchain.length; i < chainLength; i++) {
+      // Get current block
       const currentBlock = blockchain[i]
+      // Format block data the way it was when it was hashed and created
       const currentBlockData = {
         index: currentBlock.index,
         timestamp: currentBlock.timestamp,
-        transactions: currentBlock.pendingTransactions,
+        transactions: currentBlock.transactions,
         previousBlockHash: currentBlock.previousBlockHash
       }
+      // Get previous block
       const previousBlock = blockchain[i - 1]
+      // Hash current block to validate its data
       const blockHash = this.hashBlock(previousBlock.hash, currentBlockData, currentBlock.nonce)
+
+      // Validate current block's hash.
       // If current block's hash does not start with 0000
       if (blockHash.substring(0, 4) !== "0000") {
+        console.log("ERROR blockHash:", blockHash)
         // Set valid chain to false
         validChain = false
       }
+
+      // Validate that current block has the correct previous block hash.
       // If current block's previous hash property does not equal the previous block's hash
       if (currentBlock.previousBlockHash !== previousBlock.hash) {
+        console.log("ERROR previcurrentBlock.previousBlockHashousBlockHash:", currentBlock.previousBlockHash, "previousBlock.hash:", previousBlock.hash)
         // Set valid chain to false
         validChain = false
       }
     }
 
-    // Check genesis block
+    // Get genesis block
     const genesisBlock = blockchain[0]
+    // Validate genesis block
     // If data does not match the data on the Blockchain constructor above
     if (genesisBlock.nonce !== 100 || genesisBlock.previousBlockHash !== "0" || genesisBlock.hash !== "0" || genesisBlock.transactions.length !== 0) {
+      console.log("ERROR genesisBlock:", genesisBlock)
       // Set valid chain to false
       validChain = false
     }

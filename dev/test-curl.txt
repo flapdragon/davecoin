@@ -17,7 +17,7 @@ curl --header "Content-Type: application/json" \
 curl --header "Content-Type: application/json" \
   --request POST \
   --data '{ "amount": 6.77803854, "sender": "bc109194zb8ekqk4uutwc5fsz4ok5zajjdy2pf62lp", "recipient": "bc1vzggu5v4r0unlke7nqf36pmhdkkvwx3uf7yp21d" }' \
-  http://localhost:3002/transaction/broadcast
+  http://localhost:3001/transaction/broadcast
 
 curl --header "Content-Type: application/json" \
   --request POST \
